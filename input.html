@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Homework Document in Progress...</title>
+        <style>
+            @page { size: A4; margin: 20mm; }
+            body { font-family: system-ui, sans-serif; line-height: 1.5; }
+            h1, h2, h3 { margin: 0 0 8pt; }
+            h1 { font-size: 18pt; text-align: center;}
+            h2 { font-size: 14pt; margin-top: 16pt; }
+            h3 { font-size: 12pt; margin-top: 12pt; }
+            .answer{color:cornflowerblue;}
+            .codeBlock{display: block; padding: 0.75rem; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px;}
+            table { width: 100%; border-collapse: collapse; }
+            th, td {border-bottom: 1px solid #ccc; padding: 6px; text-align: left; }
+            ol[type="a"] li::marker{ content: counter(list-item, lower-alpha) ") "; }
+            img { text-align: center; }
+        </style>
+    </head>
+    <body>
+        <section>
+            <h1>Q1. Multiple Choice</h1>
+                <p><strong>1. Each element of an array is accessed by a number known as a(n) __________.</strong></p>
+                <p class="answer">a. subscript</p>
+                <br>
+                <p><strong>2. The first subscript in an array is always ___________.</strong></p>
+                <p class="answer">b. 0</p>
+                <br>
+                <p><strong>3. The last subscript in an array is always __________.</strong></p>
+                <p class="answer">d. 1 less than the number of elements</p>
+                <br>
+                <p><strong>4. This array field holds the number of elements that the array has.</strong></p>
+                <p class="answer">c. length</p>
+                <br>
+            </section>
+            <section>
+                <h1>Q3. Short Answer</h1>
+                <ol>
+                    <li>
+                        <pre><code>int[] values = new int[10];</code></pre>
+                        <ol type="a">
+                            <li class="answer">10</li>
+                            <li class="answer">values[0]</li>
+                            <li class="answer">values[9]</li>
+                        </ol>
+                    </li>
+                    <li>
+                        <pre><code>int[] values = { 4, 7, 6, 8, 2 };</code></pre>
+                        <ol type="a">
+                            <li class="answer">
+                                <pre><code style="color:green;">System.out.println(values[4]);</code></pre>
+                                outputs "2"
+                            </li>
+                            <li class="answer">
+                                <pre><code style="color:green">x = values[2] + values[3];<br>System.out.println(x);</code></pre>
+                                outputs "14";
+                            </li>
+                            <li class="answer">
+                                <pre><code style="color:green">x = ++values[1];<br>System.out.println(x);</code></pre>
+                                outputs "8"
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </section>
+            <section>
+                <h1>Q4. Programming</h1>
+                <ol>
+                    <li>
+                        <pre><code class="codeBlock">
+import java.util.Scanner;
+
+class Sandbox {
+    static int amanda = 80;
+    static int jose = 82;
+    static int carlos = 91;
+    static int sarah = 76;
+    static int fred = 72;
+    static double[] classScores = {amanda, jose, carlos, sarah, fred};
+    static boolean addingMore = true;
+
+    private static void checkAverage (double[] scores, String answer)
+    {
+        answer = answer.toLowerCase();
+        if (answer == "n" || answer=="no")
+        {
+            addingMore = false;
+            return;
+        }
+        else if (answer == "y" || answer == "ye" || answer == "yes")
+        {
+            double[] scoreCopy = scores;
+            scores = new double[scores.length + 1];
+            for (int i = 0; i < (scores.length - 1); i++)
+            {
+                scores[i] = scoreCopy[i];
+            }
+            scores[scores.length - 1] = (Math.random() * 100);
+            classScores = new double[scores.length];
+            classScores = scores;
+
+            System.out.println(
+                String.format(
+                    "Okay! The new score added will be: %f.2!\n" +
+                    "New average is %f.2\n" +
+                    "Do you want to add another score?", scores[scores.length - 1], average(scores))
+            );
+        }
+        else
+        {
+            System.out.println("Please choose 'yes' or 'no'.");
+        }
+
+        
+    }
+
+    public static void main(String[] args) {
+        double classAverage = average(classScores);
+
+        Scanner input = new Scanner(System.in);
+        String answer = "";
+
+        System.out.println( 
+            String.format(
+                "Class average is: %f.2.\n\n" +
+                "Would you like to add another score?", classAverage
+            ));
+
+        while(addingMore)
+        {
+            answer = input.nextLine();
+            classScores = checkAverage(classScores, answer);
+        }
+
+        input.close();
+    }
+}
+                        </code></pre>
+                    </li>
+                    <li>
+                        <pre><code class="codeBlock"></code></pre>
+                    </li>
+                    <li>
+                        <pre><code class="codeBlock"></code></pre>
+                    </li>
+                </ol>
+            </section>
+  
+    </body>
+</html>

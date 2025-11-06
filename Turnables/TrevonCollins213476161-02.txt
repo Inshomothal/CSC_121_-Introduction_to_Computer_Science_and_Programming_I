@@ -1,0 +1,88 @@
+Q1. Warm Up!
+-------------------------
+public class WarmUp {
+    public static void main (String[] args) {
+        System.out.println("Trevon Collins\n" + 
+            "\tFavorite Band: Coldplay\n" + 
+            "\tSongs from band: 1) Viva la vida, 2) Yellow, 3) Fix You");
+    }
+}
+===================================================
+
+Q2. Reading Code
+-------------------------
+public class Success {
+    public static void main (String[] args) {
+        // It's a mad, mad program.
+        System.out.println("\nSuccess");
+        System.out.print("Success ");
+        System.out.print("Success\n");
+        System.out.print("Success\n");
+    }
+}
+===================================================
+
+Q3. Primitive Data Types
+-------------------------
+1. float VS. double - double is more precise for more data while float uses less data and is less accurate.
+2. int VS short - int is the default data type for integers and fits general needs. Short is for sensors or data management where int is overkill.
+3. int VS long - int is the default type to use for counting unless the numbers exceed the maximum of an int.
+4. char VS byte - byte is for simple sensor arrays or color data, byte is for single characters.
+===================================================
+
+4. Lanc Calculation
+-------------------------
+public class LineCalculation {
+    public static void main (String[] args) {
+        /*
+         * One acre is 43,560 square feet.
+         * We have 389,767 square feet of land.
+         * How many acres of land do we have?
+         * Variables for 
+         *  [] Acres in square feet
+         *  [] Total land in square feet
+         *  [] Total land in acres
+         */
+
+         int acreToSquareFeet = 43560;
+         int landInSquareFeet = 389767;
+         double landInAcres = (double) landInSquareFeet / acreToSquareFeet;
+
+         System.out.println("We have a total of " + landInAcres + " acres of land.");
+    }
+}
+
+Of the variables that should/shouldn't be constants:
+    - acreToSquareFeet should be a constant because it doesn't change and it is crucial to the
+      rest of the program working
+    - landInSquareFeet shouldn't because it would change as you own changing amounts of land.
+    > It could even change for different users.
+    - landInAcres shouldn't because it is the result of two variables. It can always change
+      when one of the variables change.
+===================================================
+
+Q5. Multiple Choice and True/False
+-------------------------
+I'm going to only include the answers.
+    1. Every complete statement ends with a __________.
+        c. semicolon
+
+    2. The following data:
+        72
+        'A'
+        "Hello World"
+        2.8712
+        ...are all examples of __________.
+        b. literals
+
+    3. A group of statements, such as the contents of a class or a method, are enclosed in ______.
+        a. braces {}
+
+    4. Which of the following are not valid assignment statements? (Indicate all that apply.)
+        b. 72 = amount;
+        c. profit = 129
+
+    5. Which of the following are not valid println statements? (Indicate all that apply.)
+        a. System.out.println + "Hello World";
+        c. out.System.println(value);
+        d. println.out(Programming is great fun)
