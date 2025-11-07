@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "src",
+        "src/project_04/src/test/java",
+        "src/project_04/src/main/java"
+    ],
+    "java.project.referencedLibraries": [],
+    "java.configuration.updateBuildConfiguration": "interactive"
+}
