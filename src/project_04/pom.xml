@@ -25,10 +25,17 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.processing</groupId>
       <artifactId>core</artifactId>
       <version>4.4.10</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.project4</groupId>
+      <artifactId>project4SampleCode</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

@@ -6,15 +6,16 @@
     "configurations": [
         {
             "type": "java",
-            "name": "ShapePaint",
+            "name": "Current File",
             "request": "launch",
-            "mainClass": "ShapePaint",
-            "projectName": "project_04"
+            "mainClass": "${file}"
         },
         {
-            "type": "jdk",
+            "type": "java",
+            "name": "App",
             "request": "launch",
-            "name": "Launch Java App"
+            "mainClass": "com.project04.App",
+            "projectName": "project_04"
         }
     ]
 }

@@ -1,9 +1,8 @@
 package com.project4;
 
-import processing.core.*;
-
-import java.util.ArrayList;
 import java.io.File;
+
+import processing.core.PApplet;
 
 /**
  * Shape Paint
