@@ -1,0 +1,10 @@
+True/False
+	5. F
+	6. F
+	
+Short Answers
+	1. A class can use the overload feature of methods to ensure that a class can handle multiple generations of its instance. A rectangle that can also be an instance of a square, a table class that could have a common constructor for 4-legged tables and a 2nd constructor that lets you define how many legs, etc. 
+	
+	2. Void methods are useful for performing actions that don't need a value to be returned. Setters for methods are great examples since they're purpose is only to change a value of the instance it's a part of.
+	
+	3. The angle brackets define what the value 

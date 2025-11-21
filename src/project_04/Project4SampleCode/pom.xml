@@ -27,5 +27,16 @@
 
   <build>
     <sourceDirectory>src</sourceDirectory>
+
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <mainClass>com.project4.ShapePaint</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>

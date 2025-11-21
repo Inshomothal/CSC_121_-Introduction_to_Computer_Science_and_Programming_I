@@ -1,6 +1,7 @@
 package com.project4;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import processing.core.PApplet;
 
@@ -41,12 +42,30 @@ public class ShapePaint extends PApplet {
 	final int WHITE   = color(255, 255, 255, 255);
 	final int BLACK   = color(  0,   0,   0, 255);
 	final int RED     = color(255,   0,   0, 255);
-	int colorIndexStroke = 0;
-	int colorIndexFill = 0;
-	int colorIndexBackground = 0;
-	// TODO: Create an int array of colors.
+	final int MAGENTA     = color(255,   0,   255, 255);
+	final int HOT_PINK     = color(255,   20,   147, 255);
+	final int ORANGE     = color(255,   127,   0, 255);
+	final int GOLD     = color(255,   191,   0, 255);
+	final int YELLOW     = color(255,   255,   0, 255);
+	final int LIME     = color(191,   255,   0, 255);
+	final int GREEN     = color(0,   255,   0, 255);
+	final int TURQUOISE     = color(0,   128,   128, 255);
+	final int CYAN     = color(0,   255,   255, 255);
+	final int BLUE     = color(0,   0,   255, 255);
+	final int LAVENDER     = color(230,   230,   250, 255);
+	final int INDIGO     = color(75,   0,   130, 255);
+	final int VIOLET     = color(148,   0,   211, 255);
+	int[] colorArray = {WHITE, BLACK, RED, MAGENTA, HOT_PINK,
+						ORANGE, GOLD, YELLOW, LIME, GREEN,
+						TURQUOISE, CYAN, BLUE, LAVENDER, INDIGO, VIOLET};
+	int cS = 0, colorIndexStroke = colorArray[cS];
+	int cF = 0, colorIndexFill = colorArray[cF];
+	int cB = 1, colorIndexBackground = colorArray[cB];
+	ArrayList<Circle> circles = new ArrayList<>();
+	ArrayList<Rectangle> rects = new ArrayList<>();
+	ArrayList<Triangle> triangles = new ArrayList<>();
+	ArrayList<int[]> drawhistory = new ArrayList<>();
 	
-	// TODO: Create lists here to hold instances of our shapes.
 	
 	
 	/**
@@ -113,7 +132,7 @@ public class ShapePaint extends PApplet {
 		// TODO: Replace hard-coded BLACK here with 
 		// contents of the color array at the index
 		// of colorIndexBackground.
-		background(BLACK);
+		background(colorIndexBackground);
 	}
 	
 	/**
@@ -126,6 +145,10 @@ public class ShapePaint extends PApplet {
 	{
 		// TODO: Iterate through each of our shape ArrayLists,
 		// and call the draw method of each shape in the lists.
+		for (Circle circle:circles) {
+			circle.draw(this);
+		}
+
 	}
 	
 	/**
@@ -153,14 +176,15 @@ public class ShapePaint extends PApplet {
 		// using the switch statement below, and draw that shape 
 		// at the mouse's <x,y>. Until then, we'll just temporarily 
 		// draw a white dot at the mouse position.
-		stroke(WHITE);
-		fill(WHITE);
-		circle(x, y, 10);
+		
 		
 		// TODO: Fill in.
 		switch (mode)
 		{
 		case MODE_CIRCLE:
+			stroke(colorIndexStroke);
+			fill(colorIndexFill);
+			circle(x, y, 10);
 			break;
 			
 		case MODE_SQUARE:
@@ -192,15 +216,19 @@ public class ShapePaint extends PApplet {
 			switch (mode)
 			{
 			case MODE_CIRCLE:
+				circles.add(new Circle(mouseX, mouseY, 10, colorIndexStroke, colorIndexFill));
 				break;
 				
 			case MODE_SQUARE:
+				rects.add(new Rectangle(mouseX, mouseY, size, colorIndexStroke, colorIndexFill));
 				break;
 				
 			case MODE_RECTANGLE:
+				rects.add(new Rectangle(mouseX, mouseY, size, size * 2, colorIndexStroke, colorIndexFill));
 				break;
 				
 			case MODE_TRIANGLE:
+				triangles.add(new Triangle(mouseX, mouseY, size, colorIndexStroke, colorIndexFill));
 				break;
 			}
 		} 
@@ -236,6 +264,7 @@ public class ShapePaint extends PApplet {
 	 */
 	public void keyPressed()
 	{
+		System.out.println(key + " was pressed.");
 		switch (key)
 		{
 		case '+':
@@ -252,16 +281,16 @@ public class ShapePaint extends PApplet {
 			break;
 			
 		case '2':
-			// TODO: Update the stroke color index.
-			colorIndexStroke = 0;
+			cS = (cS < colorArray.length - 1) ? (cS + 1) : 0;
+			colorIndexStroke = colorArray[cS];
 			break;
 		case '3':
-			// TODO: Update the fill color index.
-			colorIndexFill = 0;
+			cF = (cF < colorArray.length - 1) ? (cF + 1) : 0;
+			colorIndexFill = colorArray[cF];
 			break;
 		case '4':
-			// TODO: Update the background color index.
-			colorIndexBackground = 0;
+			cB = (cB < colorArray.length - 1) ? (cB + 1) : 0;
+			colorIndexBackground = colorArray[cB];
 			break;
 			
 		case DELETE:
