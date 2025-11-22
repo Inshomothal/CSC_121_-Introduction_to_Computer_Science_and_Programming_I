@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import processing.core.PVector;
 
 /**
  * Shape Paint
@@ -18,6 +19,7 @@ import processing.core.PApplet;
  * 2: Change stroke color.
  * 3: Change fill color.
  * 4: Change background color.
+ * 5: Rotates rectangle.
  * +: Increase size.
  * -: Decrease size.
  * 0: Save a screenshot to the screenshot path.
@@ -27,18 +29,25 @@ import processing.core.PApplet;
  */
 public class ShapePaint extends PApplet {
 	
-	float size = 100f;
+	float size = 10f;
+	float sizeRH = size;
+	float sizeRW = sizeRH * 2 ;
 	final float sizeInc = 10.0f;
 	
 	boolean canTakeScreenshot = false;
 	
+	//============== THE MODES ===================
 	final int MODE_CIRCLE = 0;
 	final int MODE_SQUARE = 1;
 	final int MODE_RECTANGLE = 2;
 	final int MODE_TRIANGLE = 3;
 	final int MODE_MAX = 4;
 	int mode = MODE_CIRCLE;
+	int rotation = 0;
+	final int ROT_REGULAR = 0;
+	final int ROT_FLIPPED = 1;
 	
+	//============= COLORS =======================
 	final int WHITE   = color(255, 255, 255, 255);
 	final int BLACK   = color(  0,   0,   0, 255);
 	final int RED     = color(255,   0,   0, 255);
@@ -61,8 +70,10 @@ public class ShapePaint extends PApplet {
 	int cS = 0, colorIndexStroke = colorArray[cS];
 	int cF = 0, colorIndexFill = colorArray[cF];
 	int cB = 1, colorIndexBackground = colorArray[cB];
+
+	//=========== OBJECT ARRAYS ==================
 	ArrayList<Circle> circles = new ArrayList<>();
-	ArrayList<Rectangle> rects = new ArrayList<>();
+	ArrayList<Rectangle> rectangles = new ArrayList<>();
 	ArrayList<Triangle> triangles = new ArrayList<>();
 	ArrayList<int[]> drawhistory = new ArrayList<>();
 	
@@ -84,6 +95,7 @@ public class ShapePaint extends PApplet {
 	 * after main. Used to initialize
 	 * properties of our window/canvas.
 	 */
+	@Override
 	public void settings() {
 		// Set the size of the window.
 		size(500, 500);
@@ -94,6 +106,7 @@ public class ShapePaint extends PApplet {
 	 * Used to initialize other elements of 
 	 * the drawing program.
 	 */
+	@Override
 	public void setup() {
 		windowTitle("Shape Paint");
 		stroke(255, 0, 0, 255);
@@ -110,6 +123,7 @@ public class ShapePaint extends PApplet {
 	 * Draw method.
 	 * Called every frame to redraw our canvas.
 	 */
+	@Override
 	public void draw() {
 		// Clear background.
 		drawBackground();
@@ -129,9 +143,6 @@ public class ShapePaint extends PApplet {
 	 */
 	public void drawBackground()
 	{
-		// TODO: Replace hard-coded BLACK here with 
-		// contents of the color array at the index
-		// of colorIndexBackground.
 		background(colorIndexBackground);
 	}
 	
@@ -143,10 +154,20 @@ public class ShapePaint extends PApplet {
 	 */
 	public void drawShapes()
 	{
-		// TODO: Iterate through each of our shape ArrayLists,
-		// and call the draw method of each shape in the lists.
-		for (Circle circle:circles) {
-			circle.draw(this);
+		for (int[] entry:drawhistory) {
+			switch(entry[0])
+			{
+				case MODE_CIRCLE:
+					circles.get(entry[1]).draw(this);
+					break;
+				case MODE_SQUARE:
+				case MODE_RECTANGLE:
+					rectangles.get(entry[1]).draw(this);
+					break;
+				case MODE_TRIANGLE:
+					triangles.get(entry[1]).draw(this);
+					break;
+			}
 		}
 
 	}
@@ -172,29 +193,58 @@ public class ShapePaint extends PApplet {
 		int x = mouseX;
 		int y = mouseY;
 
-		// TODO: Create an instance of our current mode's shape
-		// using the switch statement below, and draw that shape 
-		// at the mouse's <x,y>. Until then, we'll just temporarily 
-		// draw a white dot at the mouse position.
+        PVector p1, p2, p3;
+        float a1 = PApplet.radians(90), a2 = PApplet.radians(210), a3 = PApplet.radians(330);
+
+        p1 = new PVector(x + size * PApplet.cos(a1), y + size * PApplet.sin(a1));
+        p2 = new PVector(x + size * PApplet.cos(a2), y + size * PApplet.sin(a2));
+        p3 = new PVector(x + size * PApplet.cos(a3), y + size * PApplet.sin(a3));		
 		
-		
-		// TODO: Fill in.
 		switch (mode)
 		{
 		case MODE_CIRCLE:
 			stroke(colorIndexStroke);
 			fill(colorIndexFill);
-			circle(x, y, 10);
+			circle(x, y, size);
 			break;
 			
 		case MODE_SQUARE:
+			stroke(colorIndexStroke);
+			fill(colorIndexFill);
+			rect(x, y, size, size);
 			break;
 			
 		case MODE_RECTANGLE:
+			stroke(colorIndexStroke);
+			fill(colorIndexFill);
+			rectangleRotation();
+			rect(x, y, sizeRW, sizeRH);
 			break;
 			
 		case MODE_TRIANGLE:
+			stroke(colorIndexStroke);
+			fill(colorIndexFill);
+			triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
 			break;
+		}
+	}
+
+	/**
+	 * Called to simulate rotation by flipping
+	 * the rectangle's width and height.
+	 */
+	private void rectangleRotation()
+	{
+		switch (rotation%2)
+		{
+			case ROT_REGULAR:
+				sizeRH = size;
+				sizeRW = size * 2;
+				break;
+			case ROT_FLIPPED:
+				sizeRH = size * 2;
+				sizeRW = size;
+				break;
 		}
 	}
 
@@ -203,39 +253,37 @@ public class ShapePaint extends PApplet {
 	 * Left: Add a shape.
 	 * Right: Undo a shape.
 	 */
+	@Override
 	public void mouseReleased()
 	{
 		if (mouseButton == LEFT) 
-		{
-			System.out.println("Clicked left mouse button.");
-			
-			// TODO: First, Remember which shape we just made here
-			// so we can "undo" it later if we want to.
-			
-			// TODO: Second, add a new shape to our shape ArrayLists.
+		{			
 			switch (mode)
 			{
 			case MODE_CIRCLE:
-				circles.add(new Circle(mouseX, mouseY, 10, colorIndexStroke, colorIndexFill));
+				circles.add(new Circle(mouseX, mouseY, size, colorIndexStroke, colorIndexFill));
+				drawhistory.add(new int[]{mode, circles.size() - 1});
 				break;
 				
 			case MODE_SQUARE:
-				rects.add(new Rectangle(mouseX, mouseY, size, colorIndexStroke, colorIndexFill));
+				rectangles.add(new Rectangle(mouseX, mouseY, size, colorIndexStroke, colorIndexFill));
+				drawhistory.add(new int[]{mode, rectangles.size() - 1});
 				break;
 				
 			case MODE_RECTANGLE:
-				rects.add(new Rectangle(mouseX, mouseY, size, size * 2, colorIndexStroke, colorIndexFill));
+				rectangleRotation();
+				rectangles.add(new Rectangle(mouseX, mouseY, sizeRW, sizeRH, colorIndexStroke, colorIndexFill));
+				drawhistory.add(new int[]{mode, rectangles.size() - 1});
 				break;
 				
 			case MODE_TRIANGLE:
 				triangles.add(new Triangle(mouseX, mouseY, size, colorIndexStroke, colorIndexFill));
+				drawhistory.add(new int[]{mode, triangles.size() - 1});
 				break;
 			}
 		} 
 		else if (mouseButton == RIGHT) 
-		{
-			System.out.println("Clicked right mouse button.");
-			
+		{		
 			undo();
 		}
 	}
@@ -245,7 +293,27 @@ public class ShapePaint extends PApplet {
 	 */
 	public void undo()
 	{
-		// TODO: Undo last shape added.
+		try{
+			int entry = drawhistory.getLast()[0];
+			drawhistory.removeLast();
+
+			switch (entry)
+			{
+				case MODE_CIRCLE:
+					circles.removeLast();
+					break;
+				case MODE_SQUARE:
+				case MODE_RECTANGLE:
+					rectangles.removeLast();
+					break;
+				case MODE_TRIANGLE:
+					triangles.removeLast();
+					break;
+					
+			}
+		}catch (Exception e) {
+			System.out.println("No more to remove.");
+		}
 	}
 	
 	/**
@@ -254,7 +322,10 @@ public class ShapePaint extends PApplet {
 	 */
 	void clearCanvas()
 	{
-		// TODO: Clear all of our shape lists.
+		drawhistory.clear();
+		circles.clear();
+		rectangles.clear();
+		triangles.clear();
 	}
 
 	/**
@@ -262,18 +333,18 @@ public class ShapePaint extends PApplet {
 	 * Handle controls like changing the shape type,
 	 * stroke and fill colors, and size.
 	 */
+	@Override
 	public void keyPressed()
 	{
-		System.out.println(key + " was pressed.");
 		switch (key)
 		{
 		case '+':
 		case '=':
-			size += sizeInc;
+				size = ((size + sizeInc)%10 == 0)? size + sizeInc: 10;
 			break;
 		case '-':
 		case '_':
-			size -= sizeInc;
+				size = ((size - sizeInc) > 0)? size - sizeInc: 5;
 			break;
 		
 		case '1':
@@ -291,6 +362,9 @@ public class ShapePaint extends PApplet {
 		case '4':
 			cB = (cB < colorArray.length - 1) ? (cB + 1) : 0;
 			colorIndexBackground = colorArray[cB];
+			break;
+		case '5':
+			rotation++;
 			break;
 			
 		case DELETE:

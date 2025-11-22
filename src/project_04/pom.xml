@@ -75,7 +75,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>com.project04.App</mainClass>
+                <mainClass>com.project04.TCollins_Project_04</mainClass>
               </manifest>
             </archive>
           </configuration>

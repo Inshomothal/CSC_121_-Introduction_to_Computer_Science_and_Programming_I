@@ -5,8 +5,8 @@ import processing.core.PVector;
 
 public class Triangle
 {
-    private float x, y, diameter;
-    private int colorStroke, colorFill;
+    private final float x, y, diameter;
+    private final int colorStroke, colorFill;
 
     public Triangle (float inX, float inY, float inSideLength, int colorS, int colorF )
     {
@@ -28,6 +28,8 @@ public class Triangle
 
         
         
+        canvas.stroke(colorStroke);
+        canvas.fill(colorFill);
         canvas.triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
     }
 }

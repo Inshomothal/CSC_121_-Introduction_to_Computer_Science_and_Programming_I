@@ -3,8 +3,8 @@ package com.project4;
 import processing.core.PApplet;
 
 public class Circle {
-    private float x, y, diameter;
-    private int colorStroke, colorFill;
+    private final float x, y, diameter;
+    private final int colorStroke, colorFill;
 
     public Circle (float inX, float inY, float d, int colorS, int colorF )
     {

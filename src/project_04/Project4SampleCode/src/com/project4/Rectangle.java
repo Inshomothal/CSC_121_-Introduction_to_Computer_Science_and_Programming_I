@@ -4,8 +4,8 @@ import processing.core.PApplet;
 
 public class Rectangle
 {
-    private float x, y, width, height;
-    private int colorStroke, colorFill;
+    private final float x, y, width, height;
+    private final int colorStroke, colorFill;
 
     public Rectangle (float inX, float inY, float inSideLength, int colorS, int colorF)
     {
@@ -22,13 +22,15 @@ public class Rectangle
         x = inX;
         y = inY;
         width = w;
-        height = y;
+        height = h;
         colorStroke = colorS;
         colorFill = colorF;
     }
 
     public void draw( PApplet canvas )
     {
+        canvas.stroke(colorStroke);
+        canvas.fill(colorFill);
         canvas.rect(x, y, width, height);
     }
 }
