@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Sandbox23",
+            "request": "launch",
+            "mainClass": "class_examples.Sandbox23",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "TCollins_Project_04",
+            "request": "launch",
+            "mainClass": "com.project04.TCollins_Project_04",
+            "projectName": "project_04"
+        }
+    ]
+}

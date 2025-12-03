@@ -2,7 +2,7 @@ package class_examples;
 
 import lab_06a.BankAccount;
 
-public class Sandbox {
+public class Sandbox06 {
     public static void main(String[] args) 
     {
         BankAccount account1 = new BankAccount("Sarah", 50.0);
