@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Pokedex",
+            "request": "launch",
+            "mainClass": "Project5_Sorting/csc121.project05.Pokedex",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Sandbox23",
             "request": "launch",
             "mainClass": "class_examples.Sandbox23",
