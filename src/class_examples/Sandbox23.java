@@ -8,7 +8,8 @@ public class Sandbox23 {
     public static void main(String[] args) 
     {
         // System.out.println("Fibonacci attempt: 10 is " + fibo(10));
-        fib(10);
+        fib(200);
+        System.out.println(fibo(50));
         
         // System.out.print("Debug Initial ArrayList: ");
         // for (Integer i : fibArrayList)
@@ -28,6 +29,8 @@ public class Sandbox23 {
         if (n==0)
             return 1; // <-- Base case
         else
+            String n = "";
+            n.
             return n * factorial (n-1);
 
     }

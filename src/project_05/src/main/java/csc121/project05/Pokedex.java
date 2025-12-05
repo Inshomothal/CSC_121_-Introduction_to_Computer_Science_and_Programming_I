@@ -12,9 +12,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.DefaultListModel;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -74,9 +74,9 @@ public class Pokedex {
 		frame.setSize(950, 700);
 		frame.setResizable(false);
 		frame.setTitle("Pokédex");
-		frame.setIconImage(new ImageIcon("data/images/pokeball.png").getImage());
+		frame.setIconImage(new ImageIcon("src/project_05/src/main/java/data/images/pokeball.png").getImage());
 
-		Image bg = new ImageIcon("data/images/pokedex.png").getImage();
+		Image bg = new ImageIcon("src/project_05/src/main/java/data/images/pokedex.png").getImage();
 		BackgroundPanel panel = new BackgroundPanel(bg);
 		panel.setLayout(null);
 		panel.setBackground(Color.DARK_GRAY);
@@ -241,7 +241,7 @@ public class Pokedex {
 	public void setScreenImage(int number) 
 	{
 		// Floating PNG
-		ImageIcon originalIcon = new ImageIcon("data/images/" + number + ".png");
+		ImageIcon originalIcon = new ImageIcon("src/project_05/src/main/java/data/images/" + number + ".png");
 		Image originalImage = originalIcon.getImage();
 
 		// Scale the image to the JLabel bounds
@@ -254,7 +254,7 @@ public class Pokedex {
 	public void setDexText(Pokemon p) 
 	{
 		if (p == null) {
-			dexText.setText("");
+			dexText.setText("ERROR!!!");
 			return;
 		}
 		String text = p.toDexText();
@@ -293,7 +293,7 @@ public class Pokedex {
 		//       You should store your Pokemon instances in the 
 		//       ArrayList fields 'pokemon' and 'orderedPokemon'.
 		
-		String dataFilename = "data/pokemon.csv";
+		String dataFilename = "src/project_05/src/main/java/data/pokemon.csv";
 		File file = new File(dataFilename);
 		
 		Scanner inputFile;
@@ -314,10 +314,24 @@ public class Pokedex {
 		while (inputFile.hasNext()) 
 		{
 			// Here's a few values from the CSV to get started.
-			int number = inputFile.nextInt();
+			int iD = inputFile.nextInt();
 			String name = inputFile.next();
+			String t1 = inputFile.next();
+			String t2 = inputFile.next();
+			int evo = inputFile.nextInt();
+			int hp = inputFile.nextInt();
+			int atk = inputFile.nextInt();
+			int def = inputFile.nextInt();
+			int spAtk = inputFile.nextInt();
+			int spDef = inputFile.nextInt();
+			int spd = inputFile.nextInt();
+			int pwr = inputFile.nextInt();
+			double ht = inputFile.nextDouble();
+			double wt = inputFile.nextDouble();
+			int ctRt = inputFile.nextInt();
 			
-			System.out.println(number + "\t" + name);
+			pokemon.add(new Pokemon(iD, name, t1, t2, evo, hp, atk, def, spAtk, spDef, spd, pwr, ht, wt, ctRt));
+			pokemon.getLast().toString();
 			
 			// TODO: There's more data on this row, but we'll let 
 			//       you parse that out yourself. Replace this 
@@ -325,8 +339,6 @@ public class Pokedex {
 			inputFile.nextLine();
 		}
 		inputFile.close();
-		
-		System.out.println("TODO: ^ Create Pokemon objects from data file: " + dataFilename);
 	}
 	
 	/**
