@@ -151,8 +151,8 @@ public class Pokedex {
 		header.setLineWrap(true);
 		header.setWrapStyleWord(true);
 		header.setBorder(BorderFactory.createEmptyBorder()); // Remove border so it "floats".
-		header.setBounds(564, 225, 295, 20); // Absolute positioning
-		panel.add(header);
+		header.setBounds(564, 225, 300, 20); // Absolute positioning
+		panel.add(header); 
 
 		// Scrollable list
 		updateScrollableList();
@@ -331,7 +331,8 @@ public class Pokedex {
 			int ctRt = inputFile.nextInt();
 			
 			pokemon.add(new Pokemon(iD, name, t1, t2, evo, hp, atk, def, spAtk, spDef, spd, pwr, ht, wt, ctRt));
-			pokemon.getLast().toString();
+			System.out.println(pokemon.getLast().toString());
+			orderedPokemon.add(new Pokemon(iD, name, t1, t2, evo, hp, atk, def, spAtk, spDef, spd, pwr, ht, wt, ctRt));
 			
 			// TODO: There's more data on this row, but we'll let 
 			//       you parse that out yourself. Replace this 
@@ -346,7 +347,23 @@ public class Pokedex {
 	 */
 	public void sortByName() 
 	{
-		// TODO
+		for (int j = 0; j < pokemon.size(); j++)
+		{
+			int index = j;
+			Pokemon orderedEntry = pokemon.get(j);
+
+			for (int i = j; i < pokemon.size(); i++)
+			{
+				if ( orderedEntry.getName().compareToIgnoreCase(pokemon.get(i).getName()) > 0)
+				{
+					index = i;
+					orderedEntry = pokemon.get(i);
+				}
+			}
+			
+			pokemon.set(index, pokemon.get(j));
+			pokemon.set(j, orderedEntry);
+		}
 	}
 
 	/**
@@ -393,7 +410,13 @@ public class Pokedex {
 	 */
 	public Pokemon findPokemonByNumber(int number) 
 	{
-		return null;
+		Pokemon foundPokemon = null;
+		for (Pokemon p : pokemon)
+		{
+			if (p.getNumber() == number)
+				foundPokemon = p;
+		}
+		return foundPokemon;
 	}
 
 	/***

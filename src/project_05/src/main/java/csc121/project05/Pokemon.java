@@ -73,12 +73,51 @@ public class Pokemon {
 		//       There's not much space in the printing area, so
 		//       you can't print everything. Test your code to make
 		//       sure it looks nice when it runs.
+
+		// TIP: This panel has 18 spaces but 17 is better to work with.
 		
-		return String.format(
-			"#%3d: %11s\n%s",
-			-1, "Temp Name",
-			"TODO: Pick some other stats to print."
-		);
+		// Title
+		int padding = 17 - name.length();
+		int pad = (padding / 2);
+		String row1 = String.format("%" + pad + "s%s%" + pad + "s", "", name, "");
+
+		// Type 
+		String types = type_1 + "/" + (type_2.isEmpty() ? null : type_2);
+		padding = 17 - types.length();
+		pad = (padding / 2);
+		if (pad > 0)
+			types = String.format ("%" + pad + "s%s%" + pad + "s", "", types, "");
+		else
+			types = String.format (" %s", types);
+		String typeSection = String.format("%s", types);
+		
+		// Stats
+		String statSection = "";
+		String stat = String.format("HT:  " + health);
+		String column1 = String.format("%-8s", stat);
+		String column2 = " CR:  " + catchRate + "%";
+		statSection = column1 + column2;
+
+		stat = "ATK: " + attack;
+		column1 = String.format("%-8s", stat);
+		column2 = " DEF: " + defense;
+		statSection += "\n" + column1 + column2;
+		
+		return String.format (	"""
+								%s
+								%s
+								%s
+								""",
+								row1, typeSection, statSection
+							);
+
+		
+
+		// return String.format(
+		// 	"#%3d: %11s\n%s",
+		// 	-1, "Temp Name",
+		// 	"TODO: Pick some other stats to print."
+		// );
 	}
 	
 	public String getName()
