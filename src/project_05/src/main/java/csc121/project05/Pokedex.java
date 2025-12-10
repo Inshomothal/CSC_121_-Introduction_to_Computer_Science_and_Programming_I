@@ -292,6 +292,9 @@ public class Pokedex {
 		//
 		//       You should store your Pokemon instances in the 
 		//       ArrayList fields 'pokemon' and 'orderedPokemon'.
+		// SUGGESTION: Follow Project 5_Pokedex.pdf directions—use try-with-resources, trim/parse each CSV column,
+		// default missing type_2 to "", add each Pokemon to both lists in the same order, and print via toString()
+		// to confirm the UI list populates.
 		
 		String dataFilename = "src/project_05/src/main/java/data/pokemon.csv";
 		File file = new File(dataFilename);
@@ -375,6 +378,8 @@ public class Pokedex {
 	public void sortByType() 
 	{
 		// TODO
+		// SUGGESTION: Implement a simple bubble sort on (type1 + type2) strings; for ties break on name or ID so
+		// repeated clicks keep a stable order. Avoid Collections.sort per the project rules.
 	}
 
 	/**
@@ -384,6 +389,7 @@ public class Pokedex {
 	public void sortByPower() 
 	{
 		// TODO
+		// SUGGESTION: Use selection sort descending on power; tie-break with ID or name to keep the UI predictable.
 	}
 
 	/**
@@ -393,6 +399,8 @@ public class Pokedex {
 	public void sortByNumber() 
 	{
 		// TODO
+		// SUGGESTION: Use a different algorithm from the others (e.g., insertion sort) if needed to satisfy the
+		// “at least one bubble and one selection sort” requirement in the assignment PDF.
 	}
 
 	/**
@@ -449,5 +457,7 @@ public class Pokedex {
 	private void findEvolutionsRecursively(Pokemon p, ArrayList<Pokemon> evolutions) 
 	{
 		// TODO
+		// SUGGESTION: Use the evolution field as the next ID; search orderedPokemon for matches, add them, then
+		// recurse so multi-step chains (e.g., base -> mid -> final) all appear in the dex text.
 	}
 }
