@@ -1,8 +1,11 @@
 package csc121.project05;
 
 public class Pokemon {
+    @SuppressWarnings("FieldMayBeFinal")
 	private int iDNumber, evolution, health, attack, defense, specialAttack, specialDefense, speed, power, catchRate;
+    @SuppressWarnings("FieldMayBeFinal")
 	private String name, type_1, type_2;
+    @SuppressWarnings("FieldMayBeFinal")
 	private double height, weight;
 	
 	public Pokemon(int id, String name, String t1,
@@ -87,7 +90,7 @@ public class Pokemon {
 		String typeSection = String.format("%s", types);
 		
 		// Stats
-		String statSection = "";
+		String statSection;
 		String stat = "HLT:" + String.format("%4d", health);
 		String column1 = String.format("%-8s", stat);
 		String column2 = " SPD:" + String.format("%4d", speed);
@@ -118,14 +121,6 @@ public class Pokemon {
 								""",
 								row1, typeSection, statSection
 							);
-
-		
-
-		// return String.format(
-		// 	"#%3d: %11s\n%s",
-		// 	-1, "Temp Name",
-		// 	"TODO: Pick some other stats to print."
-		// );
 	}
 	
 	public String getName()
@@ -136,6 +131,16 @@ public class Pokemon {
 	public int getNumber()
 	{
 		return iDNumber;
+	}
+
+	public int getEvolution()
+	{
+		return evolution;
+	}
+
+	public String getTypes()
+	{
+		return type_1 + type_2;
 	}
 
 	public void outputString()
