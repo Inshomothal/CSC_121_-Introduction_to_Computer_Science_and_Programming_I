@@ -143,6 +143,11 @@ public class Pokemon {
 		return type_1 + type_2;
 	}
 
+	public int getPower()
+	{
+		return power;
+	}
+
 	public void outputString()
 	{
 		System.out.println(	iDNumber + "\t" +

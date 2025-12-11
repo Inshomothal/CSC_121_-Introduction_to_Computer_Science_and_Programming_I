@@ -12,6 +12,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -190,6 +193,9 @@ public class Pokedex {
 
 					setScreenImage(num);
 					setDexText(findPokemonByNumber(num));
+					setAudio(num);
+					// TODO: Play audio for the selected entry (e.g., load "src/project_05/src/main/java/data/audio/<num>.wav"
+					// or by name); add a helper to build the clip path and trigger playback here.
 				}
 			}
 		});
@@ -277,6 +283,22 @@ public class Pokedex {
 			}
 		}
 		dexText.setText(text);
+	}
+
+	public void setAudio(int number)
+	{
+		String path = "src\\project_05\\src\\main\\java\\data\\audio\\" + number + ".wav";
+		try
+		{
+			AudioInputStream in = AudioSystem.getAudioInputStream(new File(path));
+			Clip clip = AudioSystem.getClip();
+			clip.open(in);
+			clip.start();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/* -----------------------------------------------------
@@ -367,15 +389,29 @@ public class Pokedex {
 	 */
 	public void sortByType() 
 	{
-		// TODO
-		// SUGGESTION: Implement a simple bubble sort on (type1 + type2) strings; for ties break on name or ID so
-		// repeated clicks keep a stable order. Avoid Collections.sort per the project rules.
-		for (int j = 0; j < pokemon.size(); j++)
+		for (int j = 0; j < pokemon.size() - 1; j++)
 		{
-			for (int i = j + 1; i < pokemon.size() - j; i++)
+			for (int i = 0; i < pokemon.size() - j - 1; i++)
 			{
-				String types0 = pokemon.get(j).getTypes();
-				String types1 = pokemon.get(i).getTypes();
+				String types0 = pokemon.get(i).getTypes();
+				String types1 = pokemon.get(i+1).getTypes();
+
+				if (types1.compareToIgnoreCase(types0) < 0)
+				{
+					Pokemon temp = pokemon.get(i+1);
+					pokemon.set(i+1, pokemon.get(i));
+					pokemon.set(i, temp);
+				}
+				else if (types1.compareToIgnoreCase(types0) == 0)
+				{
+					if(pokemon.get(i+1).getNumber() < pokemon.get(i).getNumber())
+					{
+						Pokemon temp = pokemon.get(i+1);
+						pokemon.set(i+1, pokemon.get(i));
+						pokemon.set(i, temp);
+					}
+				}
+
 			}
 		}
 	}
@@ -386,8 +422,38 @@ public class Pokedex {
 	 */
 	public void sortByPower() 
 	{
-		// TODO
-		// SUGGESTION: Use selection sort descending on power; tie-break with ID or name to keep the UI predictable.
+		for (int j = 0; j < pokemon.size() - 1; j++)
+		{
+			Pokemon p = pokemon.get(j);
+			int index = j;
+			for (int i = j + 1; i < pokemon.size(); i++)
+			{
+				if (pokemon.get(i).getPower() < p.getPower())
+				{
+					System.out.println("Debugging: Swapping " + 
+										p.getName() + "(" + p.getNumber() + ") with " +
+										pokemon.get(i).getName() + "(" + pokemon.get(i).getNumber() + ")");
+
+					p = pokemon.get(i);
+					index = i;
+				}
+				else if (pokemon.get(i).getPower() == p.getPower())
+				{
+					System.out.println("Debugging Level 2:\n" +
+										p.getName() + "(" + p.getNumber() + ") has same value as " +
+										pokemon.get(i).getName() + "(" + pokemon.get(i).getNumber() + ").");
+
+					index = (pokemon.get(i).getNumber() < p.getNumber() ? i : index);
+					p = pokemon.get(index);
+					System.out.println("The smallest should now be " + p.getName());
+				}
+			}
+			if (p != pokemon.get(j))
+			{
+				pokemon.set(index, pokemon.get(j));
+				pokemon.set(j, p);
+			}
+		}
 	}
 
 	/**
@@ -399,6 +465,21 @@ public class Pokedex {
 		// TODO
 		// SUGGESTION: Use a different algorithm from the others (e.g., insertion sort) if needed to satisfy the
 		// “at least one bubble and one selection sort” requirement in the assignment PDF.
+		for (int j = 0; j < pokemon.size() - 1; j++)
+		{
+			Pokemon p = pokemon.get(j);
+			int index = j;
+			for (int i = j + 1; i < pokemon.size(); i++)
+			{
+				index = (pokemon.get(i).getNumber() < p.getNumber()) ? i : index;
+				p = pokemon.get(index);
+			}
+			if (p != pokemon.get(j))
+			{
+				pokemon.set(index, pokemon.get(j));
+				pokemon.set(j, p);
+			}
+		}
 	}
 
 	/**
