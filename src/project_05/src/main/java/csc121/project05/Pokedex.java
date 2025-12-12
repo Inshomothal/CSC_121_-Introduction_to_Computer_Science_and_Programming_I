@@ -12,9 +12,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -187,21 +184,26 @@ public class Pokedex {
 				}
 
 				if (selectedValue != null) {
-					Scanner numScanner = new Scanner(selectedValue);
-					int num = numScanner.nextInt();
-					numScanner.close();
+					Scanner numScanner;
+					try
+					{
+						numScanner = new Scanner(selectedValue);
+						int num = numScanner.nextInt();
+						numScanner.close();
 
-					setScreenImage(num);
-					setDexText(findPokemonByNumber(num));
-					setAudio(num);
-					// TODO: Play audio for the selected entry (e.g., load "src/project_05/src/main/java/data/audio/<num>.wav"
-					// or by name); add a helper to build the clip path and trigger playback here.
+						setScreenImage(num);
+						setDexText(findPokemonByNumber(num));
+
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
 				}
 			}
 		});
 		list.setCellRenderer((ListCellRenderer<? super String>) new DefaultListCellRenderer() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 					boolean cellHasFocus) {
 				JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected,
@@ -283,22 +285,6 @@ public class Pokedex {
 			}
 		}
 		dexText.setText(text);
-	}
-
-	public void setAudio(int number)
-	{
-		String path = "src\\project_05\\src\\main\\java\\data\\audio\\" + number + ".wav";
-		try
-		{
-			AudioInputStream in = AudioSystem.getAudioInputStream(new File(path));
-			Clip clip = AudioSystem.getClip();
-			clip.open(in);
-			clip.start();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
 	}
 
 	/* -----------------------------------------------------
@@ -430,22 +416,13 @@ public class Pokedex {
 			{
 				if (pokemon.get(i).getPower() < p.getPower())
 				{
-					System.out.println("Debugging: Swapping " + 
-										p.getName() + "(" + p.getNumber() + ") with " +
-										pokemon.get(i).getName() + "(" + pokemon.get(i).getNumber() + ")");
-
 					p = pokemon.get(i);
 					index = i;
 				}
 				else if (pokemon.get(i).getPower() == p.getPower())
 				{
-					System.out.println("Debugging Level 2:\n" +
-										p.getName() + "(" + p.getNumber() + ") has same value as " +
-										pokemon.get(i).getName() + "(" + pokemon.get(i).getNumber() + ").");
-
 					index = (pokemon.get(i).getNumber() < p.getNumber() ? i : index);
 					p = pokemon.get(index);
-					System.out.println("The smallest should now be " + p.getName());
 				}
 			}
 			if (p != pokemon.get(j))
@@ -462,9 +439,6 @@ public class Pokedex {
 	 */
 	public void sortByNumber() 
 	{
-		// TODO
-		// SUGGESTION: Use a different algorithm from the others (e.g., insertion sort) if needed to satisfy the
-		// “at least one bubble and one selection sort” requirement in the assignment PDF.
 		for (int j = 0; j < pokemon.size() - 1; j++)
 		{
 			Pokemon p = pokemon.get(j);

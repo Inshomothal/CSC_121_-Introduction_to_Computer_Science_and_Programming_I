@@ -9,4 +9,36 @@
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>csc121.project05.Pokedex</exec.mainClass>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>${main.class}</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>pokedex</id>
+            <properties>
+                <main.class>csc121.project05.Pokedex</main.class>
+            </properties>
+        </profile>
+        <profile>
+            <id>pokedex-audio</id>
+            <properties>
+                <main.class>csc121.project05.PokedexWithAudio</main.class>
+            </properties>
+        </profile>
+    </profiles>
 </project>

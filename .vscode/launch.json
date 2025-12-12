@@ -8,8 +8,11 @@
             "type": "java",
             "name": "Pokedex",
             "request": "launch",
-            "mainClass": "Project5_Sorting/csc121.project05.Pokedex",
-            "projectName": ""
+            "mainClass": "csc121.project05/csc121.project05.Pokedex",
+            "modulePaths": [
+                "${workspaceFolder}/src/project_05/target/classes"
+            ],
+            "projectName": "project_05"
         },
         {
             "type": "java",
@@ -30,6 +33,16 @@
             "request": "launch",
             "mainClass": "com.project04.TCollins_Project_04",
             "projectName": "project_04"
+        },
+        {
+            "type": "java",
+            "name": "Pokedex with Audio",
+            "request": "launch",
+            "mainClass": "csc121.project05/csc121.project05.PokedexWithAudio",
+            "modulePaths": [
+                "${workspaceFolder}/src/project_05/target/classes"
+            ],
+            "projectName": "project_05"
         }
     ]
 }
